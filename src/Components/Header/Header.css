@@ -1,0 +1,273 @@
+/* Header wrapper */
+.app-header {
+  position: relative; /* needed for absolute center */
+  width: 100%;
+  height: 72px;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  background: linear-gradient(90deg, #ffffff, #f7fbff);
+  border-bottom: 1px solid rgba(11, 50, 84, 0.06);
+  box-shadow: 0 6px 18px rgba(9, 30, 63, 0.04);
+  top: 0;
+  z-index: 100;
+}
+
+/* Left area (avatar + welcome) */
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  z-index: 110; /* above centered title */
+  pointer-events: auto;
+}
+
+/* Small circular blue avatar */
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #1e90ff 0%, #1266d3 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 14px rgba(18, 102, 211, 0.22);
+  border: 2px solid rgba(255, 255, 255, 0.85);
+  flex: 0 0 40px;
+}
+
+/* initials on top of the circle */
+.avatar-initials {
+  font-weight: 800;
+  font-size: 14px;
+  color: #ffffff;
+  letter-spacing: 0.6px;
+}
+
+/* Welcome text */
+.welcome .small {
+  font-size: 12px;
+  color: #7f98a2;
+  line-height: 1;
+}
+.welcome .name {
+  font-weight: 700;
+  font-size: 14px;
+  color: #213f48; /* subtle darker color */
+  line-height: 1;
+}
+
+/* Center title — absolutely centered across the header */
+.header-center {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 50%;
+  transform-origin: center;
+  transform: translateX(-50%) translateY(-50%);
+  pointer-events: none; /* so left-side is clickable */
+  z-index: 105;
+  width: 100%;
+  text-align: center;
+}
+
+/* Brand/title styling and color */
+.brand {
+  margin: 0;
+  font-size: 20px;
+  color: #154059; /* custom pleasing navy/teal color */
+  font-weight: 900;
+  letter-spacing: 0.2px;
+}
+
+/* right placeholder to keep spacing */
+.header-right {
+  margin-left: auto;
+  min-width: 120px;
+}
+
+.logout-btn {
+  padding: 8px 16px;
+  border-radius: 20px;
+  border: none;
+  background: #ff4d4f;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.1s ease;
+  box-shadow: 0 4px 12px rgba(255, 77, 79, 0.3);
+}
+
+.logout-btn:hover {
+  background: #e04344;
+  transform: scale(1.05);
+}
+
+/* Header avatar image & initials */
+.app-header .avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #e6f0ff, #bfe1ff);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 12px;
+  overflow: hidden;
+}
+
+.app-header .avatar-initials {
+  color: #fff;
+  font-weight: 700;
+  font-size: 16px;
+  letter-spacing: 0.6px;
+  padding: 4px;
+}
+
+.app-header .avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* ---------- Responsive tweaks for header ---------- */
+
+/* General small adjustments for moderate screens */
+@media (max-width: 992px) {
+  .app-header {
+    height: 64px;
+    padding: 0 14px;
+  }
+
+  .app-header .brand {
+    font-size: 18px;
+  }
+
+  .app-header .avatar,
+  .app-header .avatar-initials {
+    width: 40px;
+    height: 40px;
+    font-size: 14px;
+  }
+
+  .welcome .name {
+    font-size: 13px;
+  }
+
+  .logout-btn {
+    padding: 7px 12px;
+    font-size: 13px;
+  }
+}
+
+/* Tablet / large phone */
+@media (max-width: 768px) {
+  .app-header {
+    height: 60px;
+    padding: 0 12px;
+    background: linear-gradient(90deg, #ffffff, #fbfdff);
+  }
+
+  /* reduce left area spacing so center can remain visible */
+  .header-left {
+    gap: 8px;
+  }
+
+  /* slightly smaller avatar */
+  .app-header .avatar {
+    width: 36px;
+    height: 36px;
+  }
+  .app-header .avatar-initials {
+    font-size: 13px;
+  }
+
+  /* hide secondary welcome small text to reduce clutter */
+  .welcome .small {
+    display: none;
+  }
+
+  /* show name with smaller font */
+  .welcome .name {
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  .logout-btn {
+    padding: 6px 10px;
+    font-size: 12px;
+  }
+
+  /* ensure center title still absolutely centered and not clipped */
+  .header-center {
+    width: calc(100% - 120px);
+  }
+}
+
+/* Small phones — vertical stacking if necessary */
+@media (max-width: 480px) {
+  .app-header {
+    height: auto;
+    padding: 8px 10px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  /* place center title on its own line */
+  .header-center {
+    position: relative;
+    left: 0;
+    transform: none;
+    top: auto;
+    text-align: center;
+    width: 100%;
+    margin: 6px 0 0 0;
+    pointer-events: none;
+  }
+
+  /* reduce brand font a touch */
+  .brand {
+    font-size: 18px;
+  }
+
+  /* compress left and right sections */
+  .header-left,
+  .header-right {
+    flex: 1 1 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+  }
+
+  /* avatar smaller */
+  .app-header .avatar {
+    width: 34px;
+    height: 34px;
+  }
+  .app-header .avatar-initials {
+    font-size: 12px;
+  }
+
+  .welcome .name {
+    font-size: 12px;
+  }
+
+  .logout-btn {
+    padding: 6px 10px;
+    font-size: 12px;
+    margin-left: auto;
+  }
+
+  /* hide header-left welcome text if space cramped */
+  .header-left .welcome {
+    display: none;
+  }
+}
+
+/* Accessibility: ensure focus outlines visible for keyboard users */
+.app-header :focus {
+  outline: 3px solid rgba(11, 116, 255, 0.12);
+  outline-offset: 2px;
+}

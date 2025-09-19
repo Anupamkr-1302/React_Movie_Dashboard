@@ -1,38 +1,41 @@
-.App {
-  text-align: center;
+/* App.css - global styles (reset, base typography, page wrapper) */
+
+/* Reset */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+html,
+body,
+#root {
+  height: 100%;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI",
+    Roboto, "Helvetica Neue", Arial;
+  background: #e9f0f8; /* page background */
+  color: #12202b;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
+/* Optional page wrapper to center content vertically on tall screens */
+.page-wrap {
   min-height: 100vh;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  padding: 36px 12px;
 }
 
-.App-link {
-  color: #61dafb;
+/* Placeholder default color (global) */
+::placeholder {
+  color: #a0b5c6;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* Keyboard focus (accessibility) - generic */
+:focus {
+  outline: none;
+}
+:focus-visible {
+  outline: 3px solid rgba(11, 116, 255, 0.18);
+  outline-offset: 2px;
 }

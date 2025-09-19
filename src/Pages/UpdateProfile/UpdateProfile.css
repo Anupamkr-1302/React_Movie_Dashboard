@@ -1,0 +1,159 @@
+:root {
+  --card-max-width: 980px;
+  --bg: #eef6fb;
+  --surface: #fbfeff;
+  --border: #e6eef6;
+  --accent: #0b74ff;
+  --text: #0b3550;
+  --shadow: 0 10px 30px rgba(10, 30, 60, 0.06);
+}
+
+/* page wrapper */
+.update-wrap {
+  padding-top: 22px;
+  padding-bottom: 32px;
+  background: var(--bg);
+  min-height: calc(100vh - 80px);
+}
+
+/* card */
+.update-card {
+  max-width: var(--card-max-width);
+  margin: 0 auto;
+  background: linear-gradient(180deg, #fff, #fbfdff);
+  border-radius: 12px;
+  padding: 22px;
+  box-shadow: var(--shadow);
+  border: 1px solid rgba(13, 50, 84, 0.04);
+}
+
+/* title */
+.update-card .form-title {
+  margin-bottom: 14px;
+  color: var(--text);
+  font-weight: 800;
+}
+
+/* controls */
+.update-card input,
+.update-card select,
+.update-card textarea {
+  width: 100%;
+  box-sizing: border-box;
+  height: 44px;
+  padding: 12px 14px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface);
+  font-size: 16px;
+  color: var(--text);
+}
+
+.update-card textarea {
+  min-height: 110px;
+}
+
+.update-card .form-row {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.update-card .form-row > div {
+  flex: 1;
+  min-width: 0;
+}
+
+.update-card .small-input {
+  flex: 0 0 120px;
+  max-width: 120px;
+}
+.update-card .phone-input {
+  flex: 1;
+}
+
+.update-card .buttons {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
+
+.update-card .btn-login {
+  background: var(--accent);
+  color: #fff;
+  padding: 10px 16px;
+  border-radius: 10px;
+  border: none;
+  font-weight: 700;
+}
+.update-card .btn-cancel {
+  background: #f2f6fb;
+  color: var(--text);
+  border: 1px solid #e6eefb;
+  padding: 10px 12px;
+  border-radius: 10px;
+}
+
+.update-card input:focus,
+.update-card textarea:focus {
+  outline: none;
+  box-shadow: 0 6px 18px rgba(11, 116, 255, 0.08);
+  border-color: rgba(11, 116, 255, 0.16);
+}
+
+@media (max-width: 720px) {
+  .update-card .form-row {
+    flex-direction: column;
+  }
+  .update-card .buttons {
+    flex-direction: column-reverse;
+  }
+}
+
+/* Responsive tweaks for UpdateProfile page */
+@media (max-width: 980px) {
+  .update-card {
+    padding: 18px;
+    max-width: 860px;
+  }
+  .update-card .form-row {
+    gap: 10px;
+  }
+}
+
+@media (max-width: 720px) {
+  .update-card {
+    padding: 14px;
+    border-radius: 10px;
+  }
+  .update-card .form-row {
+    flex-direction: column;
+  }
+  .update-card .small-input {
+    flex: 0 0 120px;
+    max-width: 100%;
+  }
+  .update-card .buttons {
+    flex-direction: column-reverse;
+    gap: 10px;
+  }
+  .update-card .btn-login,
+  .update-card .btn-cancel {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .update-wrap {
+    padding: 12px 10px;
+  }
+  .update-card {
+    padding: 12px;
+  }
+  .update-card input,
+  .update-card select,
+  .update-card textarea {
+    height: 44px;
+    font-size: 15px;
+  }
+}

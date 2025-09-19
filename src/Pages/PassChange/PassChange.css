@@ -1,0 +1,123 @@
+.passchange-wrap {
+  padding-top: 24px;
+  padding-bottom: 36px;
+}
+
+.pass-card {
+  max-width: 920px;
+  margin: 0 auto;
+  background: #fff;
+  border-radius: 10px;
+  padding: 24px;
+  box-shadow: 0 10px 30px rgba(9, 30, 63, 0.06);
+}
+
+.pass-form .form-row {
+  margin-bottom: 12px;
+}
+
+.pass-form label {
+  font-weight: 700;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.pass-form input {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid #e6eef6;
+  border-radius: 8px;
+  box-sizing: border-box;
+  font-size: 15px;
+}
+
+.error {
+  color: #b00020;
+  margin-top: 8px;
+  font-weight: 700;
+}
+
+.success {
+  color: #188038;
+  margin-top: 8px;
+  font-weight: 700;
+}
+
+.buttons {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  margin-top: 18px;
+}
+
+.btn {
+  padding: 10px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  border: none;
+}
+
+.btn-login {
+  background: #0b6cff;
+  color: #39940f;
+  font-weight: 700;
+}
+
+.btn-cancel {
+  background: #f2f6fb;
+  color: #0b3550;
+  border: 1px solid #e3eefb;
+}
+
+/* Responsive tweaks for PassChange */
+@media (max-width: 768px) {
+  .pass-card {
+    padding: 18px;
+    max-width: 720px;
+  }
+  .pass-form .form-row {
+    margin-bottom: 10px;
+  }
+  .buttons {
+    justify-content: stretch;
+    flex-direction: column-reverse;
+    gap: 10px;
+  }
+  .btn-login,
+  .btn-cancel {
+    width: 100%;
+  }
+}
+
+/* ensure the page takes full height and pushes footer down */
+.page-wrap.passchange-wrap {
+  min-height: calc(
+    100vh - 80px
+  ); /* adjust 80px if your header height differs */
+  display: flex;
+  flex-direction: column;
+}
+
+.pass-card {
+  width: 100%;
+  max-width: 600px; /* you can tweak: 500px, 640px, etc. */
+  margin: 0 auto;
+  background: #fff;
+  border-radius: 10px;
+  padding: 24px;
+  box-shadow: 0 10px 30px rgba(9, 30, 63, 0.06);
+  flex: 1; /* so it still stretches vertically */
+}
+
+@media (max-width: 480px) {
+  .pass-card {
+    padding: 14px;
+    border-radius: 10px;
+  }
+  .pass-form input {
+    height: 44px;
+  }
+  .buttons {
+    gap: 8px;
+  }
+}

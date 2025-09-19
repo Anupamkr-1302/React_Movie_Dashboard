@@ -1,0 +1,158 @@
+/* Registration.css - centered card with 2-col form and mobile stack */
+.registration-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 18px;
+  background: #fafafe;
+  box-sizing: border-box;
+}
+
+.registration-card {
+  width: 760px;
+  max-width: 100%;
+  background: #fff;
+  border-radius: 12px;
+  padding: 28px;
+  box-shadow: 0 18px 50px rgba(11, 30, 60, 0.06);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  box-sizing: border-box;
+}
+
+.registration-card h2 {
+  margin: 0;
+  text-align: center;
+  font-size: 26px;
+  font-weight: 800;
+  color: #0b2130;
+}
+
+/* grid form: two columns on desktop, single column on mobile */
+.reg-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  align-items: start;
+}
+
+/* full width rows */
+.reg-form .full {
+  grid-column: 1 / -1;
+}
+
+/* inputs */
+.input-row label {
+  display: block;
+  font-size: 13px;
+  color: #153b4a;
+  margin-bottom: 6px;
+}
+.input-row input,
+.input-row textarea {
+  width: 100%;
+  height: 44px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid #e6eff6;
+  background: #fbfeff;
+  font-size: 15px;
+  color: #0b2130;
+  box-sizing: border-box;
+}
+.input-row textarea {
+  height: 110px;
+  min-height: 110px;
+  resize: none;
+  padding: 12px;
+}
+
+/* eye icon */
+.eye-toggle {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+/* password suggestion box (full width) */
+.pwd-suggestion {
+  grid-column: 1 / -1;
+  margin-top: 8px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: #fbfdff;
+  border: 1px solid #eef6fb;
+  font-size: 13px;
+  color: #284a56;
+}
+.pwd-suggestion .rule {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 6px;
+}
+.pwd-suggestion .rule:last-child {
+  margin-bottom: 0;
+}
+
+/* error */
+.form-error {
+  color: #9b1c1c;
+  background: #fff4f4;
+  padding: 8px 10px;
+  border-radius: 8px;
+  font-size: 13px;
+  border: 1px solid rgba(155, 28, 28, 0.08);
+}
+
+/* actions & footer */
+.auth-actions {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  grid-column: 1 / -1;
+  margin-top: 8px;
+}
+.auth-actions button {
+  background: #0b74ff;
+  color: #fff;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  min-width: 180px;
+}
+.auth-footer {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding-top: 12px;
+  border-top: 1px solid rgba(11, 30, 60, 0.03);
+}
+
+/* Responsive: tablet -> smaller card; phone -> stack columns */
+@media (max-width: 900px) {
+  .registration-card {
+    width: 640px;
+    padding: 22px;
+  }
+}
+@media (max-width: 520px) {
+  .registration-card {
+    width: 100%;
+    padding: 16px;
+  }
+  .reg-form {
+    grid-template-columns: 1fr;
+  }
+  .auth-actions button {
+    width: 100%;
+    min-width: 0;
+  }
+}

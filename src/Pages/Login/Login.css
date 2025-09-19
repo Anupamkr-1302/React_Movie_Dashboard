@@ -1,0 +1,190 @@
+/* Center page vertically + horizontally */
+.login-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 18px;
+  background: #fafafe;
+  box-sizing: border-box;
+}
+
+/* Card */
+.login-card {
+  width: 420px;
+  max-width: 100%;
+  background: #fff;
+  border-radius: 12px;
+  padding: 28px;
+  box-shadow: 0 18px 50px rgba(11, 30, 60, 0.06);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  box-sizing: border-box;
+}
+
+/* Title centered */
+.login-card h2 {
+  margin: 0;
+  text-align: center;
+  font-size: 26px;
+  font-weight: 800;
+  color: #0b2130;
+}
+
+/* Body - more breathing room between fields */
+.card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 18px; /* increased spacing between inputs */
+}
+
+/* Each input block */
+.input-row {
+  position: relative; /* makes eye-toggle absolute positioning relative to this block */
+  display: block;
+}
+
+/* Label */
+.input-row label {
+  display: block;
+  font-size: 13px;
+  color: #153b4a;
+  margin-bottom: 6px;
+}
+
+/* Inputs styling */
+.input-row input,
+.input-row textarea {
+  width: 100%;
+  height: 44px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid #e6eff6;
+  background: #fbfeff;
+  font-size: 15px;
+  color: #0b2130;
+  box-sizing: border-box;
+}
+
+/* Non-resizable textarea (if used) */
+.input-row textarea {
+  height: 110px;
+  min-height: 110px;
+  resize: none;
+  padding: 12px;
+}
+
+/* Eye toggle button */
+.eye-toggle {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%); /* vertical center */
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
+  padding-top: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 28px; /* explicit size to stabilize centering */
+  width: 28px;
+  line-height: 0;
+}
+
+/* Password suggestion box */
+.pwd-suggestion {
+  margin-top: 8px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: #fbfdff;
+  border: 1px solid #eef6fb;
+  font-size: 13px;
+  color: #284a56;
+}
+.pwd-suggestion .rule {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 6px;
+}
+.pwd-suggestion .rule:last-child {
+  margin-bottom: 0;
+}
+.pwd-suggestion .ok {
+  color: #117a00;
+  font-weight: 600;
+}
+.pwd-suggestion .bad {
+  color: #8b1c1c;
+}
+
+/* Error box */
+.form-error {
+  color: #9b1c1c;
+  background: #fff4f4;
+  padding: 8px 10px;
+  border-radius: 8px;
+  font-size: 13px;
+  border: 1px solid rgba(155, 28, 28, 0.08);
+}
+
+/* Actions & footer */
+.auth-actions {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 8px;
+}
+.auth-actions button {
+  background: #0b74ff;
+  color: #fff;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  min-width: 160px;
+}
+
+/* Footer area inside card, close to bottom */
+.auth-footer {
+  margin-top: 8px;
+  text-align: center;
+  padding-top: 12px;
+  border-top: 1px solid rgba(11, 30, 60, 0.03);
+  font-size: 14px;
+  color: #203847;
+}
+
+/* Responsive adjustments */
+@media (max-width: 900px) {
+  .login-card {
+    padding: 20px;
+    width: 100%;
+    max-width: 560px;
+  }
+  .auth-actions button {
+    min-width: 140px;
+  }
+}
+@media (max-width: 520px) {
+  .login-card {
+    padding: 16px;
+    border-radius: 10px;
+  }
+  .card-body {
+    gap: 14px;
+  }
+  .input-row input,
+  .input-row textarea {
+    height: 44px;
+    font-size: 15px;
+  }
+  .auth-actions button {
+    width: 100%;
+    min-width: 0;
+  }
+}
