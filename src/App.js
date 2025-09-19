@@ -50,48 +50,42 @@ function App() {
         <Route path="/register" element={<Registration />} />
 
         {/* Protected pages - wrapped with RequireAuth */}
-        <Route
-          path="/dashboard"
+        <Route path="/dashboard"
           element={
             <RequireAuth>
               <Dashboard />
             </RequireAuth>
           }
         />
-        <Route
-          path="/dashboard/add"
+        <Route path="/dashboard/add"
           element={
             <RequireAuth>
               <AddMovies />
             </RequireAuth>
           }
         />
-        <Route
-          path="/movies/:id"
+        <Route path="/movies/:id"
           element={
             <RequireAuth>
               <MovieDetails />
             </RequireAuth>
           }
         />
-        <Route
-          path="/edit/:id"
+        <Route path="/edit/:id"
           element={
             <RequireAuth>
               <EditMovies />
             </RequireAuth>
           }
         />
-        <Route
-          path="/dashboard/update"
+        <Route path="/dashboard/update"
           element={
             <RequireAuth>
               <UpdateProfile />
             </RequireAuth>
           }
         />
-        <Route
-          path="/dashboard/changepassword"
+        <Route path="/dashboard/changepassword"
           element={
             <RequireAuth>
               <PassChange />
