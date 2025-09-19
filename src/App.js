@@ -1,3 +1,5 @@
+// src/App.js
+import React from "react";
 import {
   BrowserRouter as Router,
   Routes,
@@ -14,6 +16,30 @@ import UpdateProfile from "./Pages/UpdateProfile/UpdateProfile";
 import AddMovies from "./Pages/AddMovies/AddMovies";
 import EditMovies from "./Pages/EditMovies/EditMovies";
 
+/**
+ * Small inline auth check that uses localStorage token presence.
+ * This avoids creating any new files and works with your existing structure.
+ */
+function isAuthenticated() {
+  try {
+    const t = localStorage.getItem("token");
+    return !!t;
+  } catch (e) {
+    return false;
+  }
+}
+
+/**
+ * Wrapper to protect routes. Use by wrapping the element:
+ * <Route path="/dashboard" element={<RequireAuth><Dashboard/></RequireAuth>} />
+ */
+function RequireAuth({ children }) {
+  if (!isAuthenticated()) {
+    // not logged in -> redirect to login
+    return <Navigate to="/" replace />;
+  }
+  return children;
+}
 
 function App() {
   return (
@@ -22,18 +48,58 @@ function App() {
         {/* Public pages */}
         <Route path="/" element={<Login />} />
         <Route path="/register" element={<Registration />} />
-        
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/dashboard/add" element={<AddMovies />} />
-        <Route path="/movies/:id" element={<MovieDetails />} />
-        <Route path="/edit/:id" element={<EditMovies />} />
-        <Route path="/dashboard/update" element={<UpdateProfile />} />
-        <Route path="/dashboard/changepassword" element={<PassChange />} />
 
-        {/* fallback */}
-        <Route path="*" element={<Navigate to="/" replace />} />
-        {/* <Route path="/movies/:id" element={<MovieDetails />} />
-        <Route path="/dashboard" element={<Dashboard />} />         */}
+        {/* Protected pages - wrapped with RequireAuth */}
+        <Route
+          path="/dashboard"
+          element={
+            <RequireAuth>
+              <Dashboard />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/dashboard/add"
+          element={
+            <RequireAuth>
+              <AddMovies />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/movies/:id"
+          element={
+            <RequireAuth>
+              <MovieDetails />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/edit/:id"
+          element={
+            <RequireAuth>
+              <EditMovies />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/dashboard/update"
+          element={
+            <RequireAuth>
+              <UpdateProfile />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/dashboard/changepassword"
+          element={
+            <RequireAuth>
+              <PassChange />
+            </RequireAuth>
+          }
+        />
+
+        {/* fallback -> go to login */}
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </Router>
