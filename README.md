@@ -116,7 +116,7 @@ Copyright (c) [2025] [Anupam Kumar]
 This repository and all its contents (source code, documentation, assets, and any other material)
 are the exclusive property of the copyright holder named above.
 
-No part of this repository may be copied, reproduced, distributed, modified, displayed,
+No part of this repository should be copied, reproduced, distributed, modified, displayed,
 performed, or used in any manner, in whole or in part, without the prior written permission
 of the copyright holder.
 
