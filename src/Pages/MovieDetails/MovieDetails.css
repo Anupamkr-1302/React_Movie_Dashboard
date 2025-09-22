@@ -18,6 +18,7 @@
   border-radius: 12px;
   padding: 24px;
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  transition: filter 0.18s ease, transform 0.18s ease;
 }
 
 .poster img {
@@ -52,6 +53,9 @@ ul {
 
 .actions {
   margin-top: 20px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
 }
 
 .actions button {
@@ -61,7 +65,8 @@ ul {
   cursor: pointer;
   background: #2563eb;
   color: white;
-  transition: 0.2s ease-in-out;
+  transition: 0.15s ease-in-out;
+  font-weight: 700;
 }
 
 .actions button:hover {
@@ -145,5 +150,95 @@ ul {
   }
   .notfound-actions .btn {
     width: 100%;
+  }
+}
+
+/* ---- Trailer modal styles & blur effect ---- */
+
+/* blur the card when trailer is open */
+.details-card.blurred {
+  filter: blur(6px) saturate(0.98);
+  pointer-events: none; /* avoid interactions under modal */
+  user-select: none;
+}
+
+/* trailer modal (page overlay) */
+.trailer-modal {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: auto;
+  z-index: 1200;
+  background: rgba(11, 17, 22, 0.38);
+  padding: 24px;
+}
+
+/* center card to contain the iframe */
+.trailer-card {
+  width: min(1000px, 96%);
+  max-width: 1100px;
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 10px 40px rgba(8, 20, 40, 0.18);
+}
+
+/* header with title + close */
+.trailer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  border-bottom: 1px solid #eef2f4;
+}
+.trailer-header h3 {
+  margin: 0;
+  font-size: 18px;
+  color: #1e2b33;
+}
+.trailer-header .close-btn {
+  border: none;
+  background: transparent;
+  font-size: 22px;
+  line-height: 1;
+  padding: 6px 10px;
+  cursor: pointer;
+}
+
+/* responsive iframe container */
+.trailer-body {
+  background: #000;
+  width: 100%;
+  height: 0;
+  padding-bottom: 56.25%; /* 16:9 */
+  position: relative;
+}
+.trailer-body iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  background: #000;
+}
+
+/* small screens: make modal almost fullscreen minus padding */
+@media (max-width: 520px) {
+  .trailer-card {
+    width: 100%;
+    height: calc(100vh - 48px);
+    max-width: 100%;
+    border-radius: 8px;
+  }
+  .trailer-body {
+    height: 100%;
+    padding-bottom: 0;
+  }
+  .trailer-body iframe {
+    position: relative;
+    width: 100%;
+    height: 100%;
   }
 }

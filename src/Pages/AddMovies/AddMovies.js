@@ -21,6 +21,7 @@ export default function AddMovies() {
     language: "",
     country: "",
     posterUrl: "",
+    trailerUrl: "", // NEW field
   });
 
   const [saving, setSaving] = useState(false);
@@ -49,6 +50,7 @@ export default function AddMovies() {
   const validate = () => {
     if (!form.title) return "Title is required";
     if (!form.posterUrl) return "Poster URL is required";
+    // trailerUrl is optional; you could add URL validation here if you want.
     return null;
   };
 
@@ -87,6 +89,7 @@ export default function AddMovies() {
         language: form.language || undefined,
         country: form.country || undefined,
         posterUrl: form.posterUrl,
+        trailerUrl: form.trailerUrl || undefined, // NEW
       };
 
       // create movie
@@ -150,7 +153,6 @@ export default function AddMovies() {
         <main className="main-column add-movie-page">
           <div className="add-movie-card">
             <div className="add-movie-header">
-              {/* Back button removed per your request */}
               <h1>Add movies</h1>
             </div>
 
@@ -180,7 +182,6 @@ export default function AddMovies() {
                   onChange={(e) => setField("director", e.target.value)}
                 />
 
-                {/* Cast section */}
                 <div className="cast-block" style={{ gridColumn: "1 / -1" }}>
                   <label>Cast</label>
                   {Array.isArray(form.cast) &&
@@ -214,7 +215,6 @@ export default function AddMovies() {
                   </button>
                 </div>
 
-                {/* Rating */}
                 <label>Rating</label>
                 <input
                   type="number"
@@ -223,7 +223,6 @@ export default function AddMovies() {
                   onChange={(e) => setField("rating", e.target.value)}
                 />
 
-                {/* Duration */}
                 <label>Duration (minutes)</label>
                 <input
                   type="number"
@@ -254,6 +253,14 @@ export default function AddMovies() {
                 <input
                   value={form.posterUrl}
                   onChange={(e) => setField("posterUrl", e.target.value)}
+                />
+
+                {/* NEW: Trailer URL directly below Poster URL */}
+                <label>Trailer URL</label>
+                <input
+                  value={form.trailerUrl}
+                  placeholder="Trailer link"
+                  onChange={(e) => setField("trailerUrl", e.target.value)}
                 />
               </div>
 

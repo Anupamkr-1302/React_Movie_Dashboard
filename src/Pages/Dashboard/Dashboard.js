@@ -8,6 +8,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 
 import Header from "../../Components/Header/Header";
 import Footer from "../../Components/Footer/Footer";
+import Loader from "../../Components/Loader/Loader";
 import {
   createMovie,
   updateMovie,
@@ -64,6 +65,9 @@ export default function Dashboard() {
   const [editing, setEditing] = useState(null);
   const [loadingApi, setLoadingApi] = useState(false);
   const [error, setError] = useState("");
+
+  // New: navigation loader state
+  const [navLoading, setNavLoading] = useState(false);
 
   // filter states
   const [filterType, setFilterType] = useState(""); // '', 'top-rated', 'latest'
@@ -299,14 +303,22 @@ export default function Dashboard() {
   const handleView = (m) => {
     const id = m._id || m.id;
     if (!id) return;
-    navigate(`/movies/${id}`);
+    // show loader immediately, then navigate so loader has time to render
+    setNavLoading(true);
+    // small delay to let the loader paint; this is intentionally short
+    setTimeout(() => {
+      navigate(`/movies/${id}`);
+    }, 120);
   };
 
   /* edit flow: navigate to dedicated edit route */
   const handleEdit = (m) => {
     const id = m._id || m.id;
     if (!id) return;
-    navigate(`/edit/${id}`);
+    setNavLoading(true);
+    setTimeout(() => {
+      navigate(`/edit/${id}`);
+    }, 120);
   };
 
   /* grid filter (client-side text search) */
@@ -412,7 +424,7 @@ export default function Dashboard() {
   }, [filterType, genreFilter]);
 
   return (
-    <div className="app-shell">
+    <div className="app-shell" aria-busy={navLoading || loadingApi}>
       <Header />
 
       <div className="shell-body">
@@ -444,6 +456,7 @@ export default function Dashboard() {
                     onClick={() => navigate("/dashboard/add")}
                     className="add-movie-btn"
                     title="Add movie"
+                    disabled={navLoading}
                   >
                     <AddCircleIcon className="add-movie-icon" />
                   </button>
@@ -648,6 +661,7 @@ export default function Dashboard() {
                           src={m.posterUrl || m.image || m.poster || ""}
                           alt={m.title || m.name}
                           onClick={() => handleView(m)}
+                          style={{ cursor: navLoading ? "not-allowed" : "pointer" }}
                         />
                       </div>
                       <div className="card-body">
@@ -657,6 +671,8 @@ export default function Dashboard() {
                             title="Edit"
                             onClick={() => handleEdit(m)}
                             className="card-action"
+                            disabled={navLoading}
+                            aria-disabled={navLoading}
                           >
                             <EditIcon />
                           </button>
@@ -665,6 +681,8 @@ export default function Dashboard() {
                             title="View"
                             onClick={() => handleView(m)}
                             className="card-action"
+                            disabled={navLoading}
+                            aria-disabled={navLoading}
                           >
                             <VisibilityIcon />
                           </button>
@@ -673,6 +691,8 @@ export default function Dashboard() {
                             title="Delete"
                             onClick={() => handleDelete(m)}
                             className="card-action danger"
+                            disabled={navLoading}
+                            aria-disabled={navLoading}
                           >
                             <DeleteIcon />
                           </button>
@@ -751,6 +771,9 @@ export default function Dashboard() {
       </div>
 
       <Footer />
+
+      {/* Loader overlay shown when navigating from dashboard to view/edit */}
+      <Loader loading={navLoading} text={navLoading ? "Loading..." : ""} />
     </div>
   );
 }

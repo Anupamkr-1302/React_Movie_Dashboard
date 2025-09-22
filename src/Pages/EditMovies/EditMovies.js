@@ -22,6 +22,7 @@ export default function EditMovies() {
     language: "",
     country: "",
     posterUrl: "",
+    trailerUrl: "", // NEW field
   });
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
@@ -57,6 +58,7 @@ export default function EditMovies() {
           language: m.language || "",
           country: m.country || "",
           posterUrl: m.posterUrl || m.image || "",
+          trailerUrl: m.trailerUrl || m.trailer || "", // NEW: load trailer
         });
       } catch (err) {
         console.error("Load movie error:", err);
@@ -132,6 +134,7 @@ export default function EditMovies() {
         language: form.language || undefined,
         country: form.country || undefined,
         posterUrl: form.posterUrl,
+        trailerUrl: form.trailerUrl || undefined, // NEW
       };
 
       const resp = await updateMovie(id, payload);
@@ -188,7 +191,6 @@ export default function EditMovies() {
         <main className="main-column add-movie-page">
           <div className="add-movie-card">
             <div className="add-movie-header">
-              {/* Back button removed per your request */}
               <h1>Edit movie</h1>
             </div>
 
@@ -204,6 +206,14 @@ export default function EditMovies() {
                 <input
                   value={form.posterUrl}
                   onChange={(e) => setField("posterUrl", e.target.value)}
+                />
+
+                {/* NEW: Trailer URL directly below Poster URL */}
+                <label>Trailer URL</label>
+                <input
+                  value={form.trailerUrl}
+                  placeholder="https://youtube.com/watch?v=..."
+                  onChange={(e) => setField("trailerUrl", e.target.value)}
                 />
 
                 <label>Description</label>
