@@ -141,7 +141,11 @@ export default function MovieDetails() {
   const sourceMovie = movie;
 
   return (
-    <div className={`app-shell movie-details-root ${showTrailer ? "show-trailer" : ""}`}>
+    <div
+      className={`app-shell movie-details-root ${
+        showTrailer ? "show-trailer" : ""
+      }`}
+    >
       <Header />
       <main className={`movie-details ${showTrailer ? "show-trailer" : ""}`}>
         <div className={`details-card ${showTrailer ? "blurred" : ""}`}>
@@ -226,7 +230,9 @@ export default function MovieDetails() {
               </div>
               <div className="trailer-body">
                 <iframe
-                  title={`trailer-${sourceMovie._id || sourceMovie.id || "movie"}`}
+                  title={`trailer-${
+                    sourceMovie._id || sourceMovie.id || "movie"
+                  }`}
                   src={embedUrl}
                   frameBorder="0"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"

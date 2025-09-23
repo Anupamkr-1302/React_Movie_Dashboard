@@ -2,6 +2,7 @@
 .edit-movie-page,
 .add-movie-page {
   padding: 22px;
+  box-sizing: border-box;
 }
 
 /* card (supports both add- and edit- page classes) */
@@ -14,6 +15,7 @@
   padding: 18px;
   box-shadow: 0 6px 18px rgba(10, 30, 60, 0.06);
   border: 1px solid rgba(13, 50, 84, 0.04);
+  width: calc(100% - 32px);
 }
 
 .add-movie-header,
@@ -32,7 +34,7 @@
   cursor: pointer;
 }
 
-/* grid form */
+/* grid form: default two-column for wide screens */
 .form-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -106,7 +108,10 @@
   border-radius: 6px;
 }
 
-/* responsive */
+/* ---- Responsive (concise) ----
+   - <= 900px: single column form, stacked actions
+   - <= 480px: tighter paddings, controls full-width, buttons full width
+*/
 @media (max-width: 900px) {
   .form-grid {
     grid-template-columns: 1fr;
@@ -133,5 +138,13 @@
   }
   .btn {
     width: 100%;
+  }
+  .cast-block .cast-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .cast-row button {
+    width: 100%;
+    margin-top: 6px;
   }
 }

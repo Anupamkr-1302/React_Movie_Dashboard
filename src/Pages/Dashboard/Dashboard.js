@@ -5,6 +5,8 @@ import AddCircleIcon from "@mui/icons-material/AddCircle";
 import EditIcon from "@mui/icons-material/Edit";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import DeleteIcon from "@mui/icons-material/Delete";
+import MenuIcon from "@mui/icons-material/Menu";
+import CloseIcon from "@mui/icons-material/Close";
 
 import Header from "../../Components/Header/Header";
 import Footer from "../../Components/Footer/Footer";
@@ -66,8 +68,17 @@ export default function Dashboard() {
   const [loadingApi, setLoadingApi] = useState(false);
   const [error, setError] = useState("");
 
-  // New: navigation loader state
+  // navigation loader state
   const [navLoading, setNavLoading] = useState(false);
+
+  // sidebar open state (for mobile overlay)
+  const [sidebarOpen, setSidebarOpen] = useState(() => {
+    try {
+      return window.innerWidth > 480; // visible by default on wider screens
+    } catch {
+      return true;
+    }
+  });
 
   // filter states
   const [filterType, setFilterType] = useState(""); // '', 'top-rated', 'latest'
@@ -89,6 +100,21 @@ export default function Dashboard() {
     posterUrl: "",
   };
   const [form, setForm] = useState({ ...emptyForm });
+
+  /* keep sidebar responsive on resize */
+  useEffect(() => {
+    function onResize() {
+      if (window.innerWidth <= 480) {
+        setSidebarOpen(false);
+      } else {
+        setSidebarOpen(true);
+      }
+    }
+    window.addEventListener("resize", onResize);
+    // initial set
+    onResize();
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
 
   /* load movies from server on mount; fallback to local if API fails */
   useEffect(() => {
@@ -423,88 +449,164 @@ export default function Dashboard() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filterType, genreFilter]);
 
+  /* sidebar toggles */
+  const closeSidebar = () => setSidebarOpen(false);
+  const toggleSidebar = () => setSidebarOpen((s) => !s);
+
   return (
     <div className="app-shell" aria-busy={navLoading || loadingApi}>
       <Header />
 
       <div className="shell-body">
-        {/* Left sidebar */}
-        <aside className="side-column" aria-label="Main navigation">
+        {/* Left sidebar - becomes overlay on very small screens */}
+        <aside
+          className={`side-column ${
+            window.innerWidth <= 480 ? "mobile-overlay" : ""
+          } ${sidebarOpen && window.innerWidth <= 480 ? "open" : ""}`}
+          aria-label="Main navigation"
+          aria-hidden={
+            window.innerWidth <= 480 ? (!sidebarOpen).toString() : "false"
+          }
+        >
+          {/* mobile close button */}
+          {window.innerWidth <= 480 && (
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "flex-end",
+                marginBottom: 8,
+              }}
+            >
+              <button
+                aria-label="Close menu"
+                onClick={closeSidebar}
+                style={{
+                  border: "none",
+                  background: "transparent",
+                  cursor: "pointer",
+                }}
+              >
+                <CloseIcon />
+              </button>
+            </div>
+          )}
+
           <div
             className={`side-item ${activeTab === "dashboard" ? "active" : ""}`}
-            onClick={() => setActiveTab("dashboard")}
+            onClick={() => {
+              setActiveTab("dashboard");
+              if (window.innerWidth <= 480) closeSidebar();
+            }}
           >
             Dashboard
           </div>
 
           <div
             className={`side-item ${activeTab === "profile" ? "active" : ""}`}
-            onClick={() => setActiveTab("profile")}
+            onClick={() => {
+              setActiveTab("profile");
+              if (window.innerWidth <= 480) closeSidebar();
+            }}
           >
             Your Profile
           </div>
         </aside>
 
+        {/* backdrop when mobile sidebar open */}
+        {sidebarOpen && window.innerWidth <= 480 && (
+          <div
+            className="mobile-backdrop"
+            onClick={closeSidebar}
+            aria-hidden="true"
+          />
+        )}
+
         {/* Main column */}
         <main className="main-column">
-          {activeTab === "dashboard" && (
-            <>
-              <div className="main-top">
-                <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-                  <button
-                    aria-label="Add movie"
-                    onClick={() => navigate("/dashboard/add")}
-                    className="add-movie-btn"
-                    title="Add movie"
-                    disabled={navLoading}
-                  >
-                    <AddCircleIcon className="add-movie-icon" />
-                  </button>
+          {/* --- HEADER / TOP CONTROLS: always rendered so hamburger shows on profile too --- */}
+          <div className="main-top">
+            <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+              {/* mobile hamburger (shown only at very small widths via CSS) */}
+              <button
+                className="mobile-hamburger"
+                aria-label={sidebarOpen ? "Close menu" : "Open menu"}
+                aria-expanded={sidebarOpen}
+                onClick={toggleSidebar}
+                style={{
+                  display: window.innerWidth <= 480 ? "inline-flex" : "none",
+                }}
+              >
+                {sidebarOpen ? <CloseIcon /> : <MenuIcon />}
+              </button>
 
-                  <h1 className="page-title">Add Movies</h1>
+              {/* Add button only makes sense on dashboard but it's not harmful on profile.
+                  If you want to hide the add button on profile, we can conditionally render it. */}
+              {activeTab === "dashboard" && (
+                <button
+                  aria-label="Add movie"
+                  onClick={() => navigate("/dashboard/add")}
+                  className="add-movie-btn"
+                  title="Add movie"
+                  disabled={navLoading}
+                >
+                  <AddCircleIcon className="add-movie-icon" />
+                </button>
+              )}
+
+              {/* Title adjusts based on active tab */}
+              <h1 className="page-title">
+                {activeTab === "dashboard" ? "Add Movies" : "Your Profile"}
+              </h1>
+            </div>
+
+            {/* Right-side controls (search / filters) - show only on dashboard */}
+            {activeTab === "dashboard" ? (
+              <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
+                <div className="search-box">
+                  <input
+                    type="search"
+                    placeholder="Search movies..."
+                    value={query}
+                    onChange={(e) => setQuery(e.target.value)}
+                  />
                 </div>
 
-                <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
-                  <div className="search-box">
-                    <input
-                      type="search"
-                      placeholder="Search movies..."
-                      value={query}
-                      onChange={(e) => setQuery(e.target.value)}
-                    />
-                  </div>
+                <div className="search-box">
+                  <select
+                    value={filterType}
+                    onChange={(e) => setFilterType(e.target.value)}
+                    aria-label="Filter movies"
+                    disabled={filterLoading}
+                  >
+                    <option value="">Filter</option>
+                    <option value="top-rated">Top rated</option>
+                    <option value="latest">Latest movies</option>
+                  </select>
+                </div>
 
-                  <div className="search-box">
-                    <select
-                      value={filterType}
-                      onChange={(e) => setFilterType(e.target.value)}
-                      aria-label="Filter movies"
-                      disabled={filterLoading}
-                    >
-                      <option value="">Filter</option>
-                      <option value="top-rated">Top rated</option>
-                      <option value="latest">Latest movies</option>
-                    </select>
-                  </div>
-
-                  <div className="search-box">
-                    <select
-                      value={genreFilter}
-                      onChange={(e) => setGenreFilter(e.target.value)}
-                      aria-label="Genre filter"
-                      disabled={filterLoading}
-                    >
-                      <option value="">Genre</option>
-                      {availableGenres.map((g) => (
-                        <option key={g} value={g}>
-                          {g}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
+                <div className="search-box">
+                  <select
+                    value={genreFilter}
+                    onChange={(e) => setGenreFilter(e.target.value)}
+                    aria-label="Genre filter"
+                    disabled={filterLoading}
+                  >
+                    <option value="">Genre</option>
+                    {availableGenres.map((g) => (
+                      <option key={g} value={g}>
+                        {g}
+                      </option>
+                    ))}
+                  </select>
                 </div>
               </div>
+            ) : (
+              <div /> /* empty placeholder so spacing stays consistent on profile */
+            )}
+          </div>
 
+          {activeTab === "dashboard" && (
+            <>
               {/* Add/Edit form (if you still want inline form support) */}
               {showForm && (
                 <div className="movie-form-card">
@@ -661,7 +763,9 @@ export default function Dashboard() {
                           src={m.posterUrl || m.image || m.poster || ""}
                           alt={m.title || m.name}
                           onClick={() => handleView(m)}
-                          style={{ cursor: navLoading ? "not-allowed" : "pointer" }}
+                          style={{
+                            cursor: navLoading ? "not-allowed" : "pointer",
+                          }}
                         />
                       </div>
                       <div className="card-body">

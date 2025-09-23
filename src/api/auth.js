@@ -59,7 +59,7 @@ export async function changePassword(payload) {
 
 /* Assign the exported functions to a named variable first, then export it.
    This removes the ESLint `import/no-anonymous-default-export` warning. */
-   
+
 const authApi = {
   login,
   register,

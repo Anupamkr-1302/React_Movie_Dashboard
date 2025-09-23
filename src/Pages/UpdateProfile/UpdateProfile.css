@@ -14,6 +14,8 @@
   padding-bottom: 32px;
   background: var(--bg);
   min-height: calc(100vh - 80px);
+  width: 100%;
+  box-sizing: border-box;
 }
 
 /* card */
@@ -25,6 +27,7 @@
   padding: 22px;
   box-shadow: var(--shadow);
   border: 1px solid rgba(13, 50, 84, 0.04);
+  width: calc(100% - 32px);
 }
 
 /* title */
@@ -57,6 +60,7 @@
   display: flex;
   gap: 12px;
   margin-bottom: 12px;
+  align-items: center;
 }
 .update-card .form-row > div {
   flex: 1;
@@ -101,16 +105,12 @@
   border-color: rgba(11, 116, 255, 0.16);
 }
 
-@media (max-width: 720px) {
-  .update-card .form-row {
-    flex-direction: column;
-  }
-  .update-card .buttons {
-    flex-direction: column-reverse;
-  }
-}
-
-/* Responsive tweaks for UpdateProfile page */
+/* ---- Responsive behavior (single concise block) ----
+   - Desktop: two-column name row (first/last) and buttons at right.
+   - Tablet (<= 980): same layout with reduced padding.
+   - Mobile (<= 720): stack rows vertically, make buttons full width.
+   - Small phone (<= 480): reduce paddings and font sizes.
+*/
 @media (max-width: 980px) {
   .update-card {
     padding: 18px;
@@ -128,14 +128,15 @@
   }
   .update-card .form-row {
     flex-direction: column;
-  }
-  .update-card .small-input {
-    flex: 0 0 120px;
-    max-width: 100%;
+    align-items: stretch;
   }
   .update-card .buttons {
     flex-direction: column-reverse;
     gap: 10px;
+  }
+  .update-card .small-input {
+    flex: 0 0 100%;
+    max-width: 100%;
   }
   .update-card .btn-login,
   .update-card .btn-cancel {

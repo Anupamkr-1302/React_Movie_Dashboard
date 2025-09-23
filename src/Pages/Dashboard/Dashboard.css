@@ -6,6 +6,17 @@
   --border: #e6eef6;
 }
 
+html,
+body,
+#root {
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
 .app-shell {
   display: flex;
   flex-direction: column;
@@ -47,6 +58,7 @@
 .main-column {
   flex: 1;
   padding: 24px;
+  min-width: 0; /* prevents wide children from forcing horizontal scroll */
 }
 
 .main-top {
@@ -93,8 +105,10 @@
   overflow: hidden;
 }
 .card-image-wrap img {
+  display: block;
   width: 100%;
   height: 100%;
+  max-width: 100%;
   object-fit: cover;
   object-position: bottom; /* crop from top, show bottom */
 }
@@ -292,10 +306,32 @@
   }
 }
 
-@media (max-width: 768px) {
+/* tablet narrow: show two-column cards, hide sidebar (keeps space) */
+@media (max-width: 768px) and (min-width: 481px) {
   .side-column {
-    display: none;
-  } /* hide sidebar to save space */
+    width: 120px;
+    padding: 8px;
+    display: flex;
+  }
+  .main-column {
+    padding: 16px;
+  }
+  .cards-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+  .card-image-wrap {
+    height: 220px;
+  }
+  .profile-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* mobile: sidebar hidden from flow; hamburger, overlay handled below */
+@media (max-width: 768px) {
+  /* keep existing behavior for <=768 as before but remove abrupt hide */
+  /* we will use overlay for <=480 */
   .main-column {
     padding: 14px;
   }
@@ -322,6 +358,7 @@
   }
 }
 
+/* mobile narrow adjustments (<=480) */
 @media (max-width: 480px) {
   .cards-grid {
     grid-template-columns: 1fr;
@@ -343,4 +380,65 @@
     gap: 8px;
     grid-template-columns: 1fr;
   }
+
+  /* hamburger button visible on very small screens */
+  .mobile-hamburger {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    padding: 6px;
+    border-radius: 6px;
+  }
+
+  /* hide the normal sidebar from flow on very small screens (we use overlay) */
+  .side-column {
+    display: none;
+  }
+}
+
+/* ---- mobile overlay sidebar styles (slide-over) ---- */
+.side-column.mobile-overlay {
+  display: flex;
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 260px;
+  max-width: 82%;
+  transform: translateX(-110%); /* hidden by default */
+  background: var(--panel);
+  box-shadow: 6px 0 30px rgba(9, 30, 63, 0.12);
+  border-right: 1px solid var(--border);
+  padding: 16px;
+  z-index: 1400;
+  transition: transform 220ms ease;
+}
+
+/* when open slide to visible */
+.side-column.mobile-overlay.open {
+  transform: translateX(0);
+}
+
+/* backdrop for mobile overlay */
+.mobile-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(11, 17, 22, 0.38);
+  z-index: 1350;
+}
+
+/* small niceties */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
 }
